@@ -1,2 +1,32 @@
 # Ghostcode
-This is the starter repository for ChatGPT Codex.
+
+This project now includes an automated PayPal news digest generator.
+
+## Setup
+
+1. Create and populate a Python virtual environment.
+2. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Copy `.env.example` to `.env` (or export the variables manually) and provide your [NewsAPI](https://newsapi.org/) key:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+## Usage
+
+Run the digest generator locally:
+
+```bash
+python -m paypal_digest --verbose
+```
+
+Digests are saved to `data/digests/` by default and printed to the console. Previously processed articles are tracked in `data/state.json` to prevent duplicate summaries across runs.
+
+## Scheduling
+
+A GitHub Actions workflow (`.github/workflows/daily-digest.yml`) is configured to execute the digest every day at 09:00 UTC. Provide a repository secret named `NEWSAPI_KEY` so the workflow can access premium sources. The workflow uploads the generated digest as an artifact for later review.
